@@ -1,9 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "noImplicitAny": false,
     "types": [
-      "jasmine",
-      "node"
+      "node",
+      "mocha",
+      "chai",
+      "chai-http"
     ]
   },
   "include": [

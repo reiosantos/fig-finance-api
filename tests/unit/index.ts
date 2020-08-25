@@ -1,1 +1,0 @@
-import '@san/init';
