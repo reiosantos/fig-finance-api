@@ -51,3 +51,4 @@ morgan-logs.log
 logs/
 build/
 .env*
+.nyc_output/
