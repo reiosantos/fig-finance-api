@@ -13,7 +13,11 @@ export const localStrategy = new LocalStrategy.Strategy({
   try {
     const user = await userM.findOne({ $or: [{'username': username}, {'email': username}] }).exec();
     if (!user) {
-      return next(null, false, { error: 'username or password is invalid' });
+      return next(null, false, {
+        isError: true,
+        data: null,
+        error: 'username or password is invalid'
+      });
     }
 
     const isValid = await user.validatePassword(password);
@@ -21,9 +25,17 @@ export const localStrategy = new LocalStrategy.Strategy({
     if (isValid) {
       return next(null, user);
     }
-    return next(null, false, { error: 'username or password is invalid' });
+    return next(null, false, {
+      isError: true,
+      data: null,
+      error: 'username or password is invalid'
+    });
   } catch (err) {
-    return next(null, false, { error: err.message || err });
+    return next(null, false, {
+      isError: true,
+      data: null,
+      error: err.message || err
+    });
   }
 });
 

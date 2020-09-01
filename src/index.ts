@@ -25,8 +25,8 @@ app.use(router);
 
 const prefix = `${global.urlPrefix}${global.urlVersion}`;
 
-let healthCheckUrls = [prefix];
-router.route(prefix).get((req, res) => res.json({ status: "OK" }));
+let healthCheckUrls = [prefix, `${prefix}/health`];
+router.route(healthCheckUrls).get((req, res) => res.json({ status: "OK" }));
 
 router.use((req, res, next) => {
   if (healthCheckUrls.indexOf(req.url) === -1) logger.info(req.method, req.url);
@@ -42,7 +42,7 @@ app.all("*",
   auth.required.unless({ path: noAuthPaths }),
   (err: any, req: any, res: any, next: Function) => {
     if (err.name === "UnauthorizedError") {
-      res.status(err.status).send({ message: err.message });
+      res.status(err.status).send({ isError: true, message: err.message, data: null });
       logger.error(err);
       return;
     }
@@ -53,7 +53,9 @@ initControllers(app, express, prefix);
 
 app.use((req, res) => {
   return res.status(404).json({
-    message: `Not Found. Use ${prefix} to access the api.`
+    isError: true,
+    message: `Not Found. Use ${prefix} to access the api.`,
+    data: null
   });
 });
 

@@ -1,6 +1,15 @@
 import {readdirSync} from 'fs';
 import { Express } from "express";
 
+/**
+ * All Controllers must conform to the response format
+ * {
+ *  "isError": false,
+ *  "message": "error message",
+ *  "data": {} // any sort of data returned in case its not an error
+ *  }
+ * */
+
 let trimTs = (path: string) => {
   return path.substr(0, path.length - 3);
 };

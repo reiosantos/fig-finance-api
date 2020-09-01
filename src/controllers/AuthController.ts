@@ -19,7 +19,7 @@ class AuthController extends ControllerBase {
         if (passportUser) {
           const userObject = passportUser;
           userObject.token = passportUser.generateJWTToken();
-          return res.json({ user: userObject.toAuthJSON() });
+          return res.json({ isError: false, data: userObject.toAuthJSON(), message: null });
         }
 
         return res.status(400).json(err || info);
