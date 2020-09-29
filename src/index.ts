@@ -4,11 +4,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import * as swagger from "swagger-ui-express";
-import swaggerDocument from "../swagger.json";
+import swaggerJSDoc from "swagger-jsdoc";
 import initControllers from "@san/controllers";
 import logger, { morgan_logger } from "@san/util/logger";
 import { auth } from "@san/helpers/auth.helpers";
 import passport from "passport";
+import swaggerOptions from "../swaggerDef";
 
 dotenv.config();
 
@@ -33,7 +34,8 @@ router.use((req, res, next) => {
   next();
 });
 
-app.use(`${prefix}/docs`, swagger.serve, swagger.setup(swaggerDocument));
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use(`${prefix}/docs`, swagger.serve, swagger.setup(swaggerSpec, { explorer: true }));
 
 // ensure all routes are authenticated except the health-check and docs
 // @ts-ignore
