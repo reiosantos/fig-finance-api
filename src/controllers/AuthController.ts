@@ -1,6 +1,8 @@
 import { Express, Request, Response } from "express";
 import { ControllerBase } from "@san/util/ControllerBase";
 import passport from "passport";
+import { MODELS } from "@san/constants";
+import ModelFactory from "@san/models/model.factory";
 
 class AuthController extends ControllerBase {
   constructor(app: Express, express: any, routerPrefix: string) {
@@ -8,6 +10,7 @@ class AuthController extends ControllerBase {
     let router: Express = new express.Router();
     // Add as many routes as you want
     router.route("/login").post(this.login);
+    router.route("/signup").post(this.signup);
 
     app.use(routerPrefix + "/auth", router);
   }
@@ -24,6 +27,17 @@ class AuthController extends ControllerBase {
 
         return res.status(400).json(err || info);
       })(req, res, next);
+  };
+
+  signup = async (req: Request, res: Response, next: Function) => {
+    // Need username/password in body
+    try{
+      const userM = ModelFactory.getModel(MODELS.USER)
+      const user = await userM.create(req.body);
+      return res.json(user.toAuthJSON())
+    } catch (e) {
+      return res.status(401).json({ error: e.message })
+    }
   };
 }
 

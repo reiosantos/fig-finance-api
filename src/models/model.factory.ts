@@ -1,5 +1,5 @@
 import logger from "@san/util/logger";
-import mongoose from "mongoose";
+import mongoose, { Model } from "mongoose";
 
 let trimTs = (path: string) => {
   return path.substr(0, path.length - 3);
@@ -13,8 +13,9 @@ class ModelFactory {
    * @param name
    * @returns {mongoose.Schema}
    */
-  static getModel = (name: string) => {
-    if (!name) return null;
+  static getModel = (name: string): Model<any> => {
+    if (!name) throw Error('Model Name not provided');
+
     const modelName = name.toLowerCase();
     const filename = `${modelName}.model.ts`;
 

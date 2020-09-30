@@ -1,14 +1,14 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import MongoWrapper from '../models';
 import { MODELS } from "@san/constants";
+import ModelFactory from "@san/models/model.factory";
 
 export const localStrategy = new LocalStrategy.Strategy({
   usernameField: 'username',
   passwordField: 'password',
   session: false
 }, async (username: string, password: string, next: Function) => {
-  const userM = MongoWrapper.getModel(MODELS.USER);
+  const userM = ModelFactory.getModel(MODELS.USER);
 
   try {
     const user = await userM.findOne({ $or: [{'username': username}, {'email': username}] }).exec();
