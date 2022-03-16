@@ -3,13 +3,25 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const EventSchema = new Schema({
-  name: {
-    type: String,
-    max: [20, 'Event Name  is required']
+  title: {
+    type: String
   },
-  dateAdded: {
+  description: {
+    type: String
+  },
+  category: {
+    type: String
+  },
+  address: {
+    type: String
+  },
+  date: {
     type: Date,
     default: Date.now
+  },
+  isVirtual: {
+    type: Boolean,
+    default: false
   }
 });
 

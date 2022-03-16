@@ -16,7 +16,7 @@ class EventsController extends ControllerBase {
   recommendations = async (req: Request, res: Response) => {
     try {
       const eventM = ModelFactory.getModel(MODELS.EVENT);
-      const events = await eventM.find({ name: { $regex: req.query.search } });
+      const events = await eventM.find({});
       return res.json(events);
     } catch (e: any) {
       return res.status(401).json({ error: e.message });
