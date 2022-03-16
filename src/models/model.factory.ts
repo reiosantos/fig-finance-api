@@ -1,7 +1,7 @@
-import logger from "@san/util/logger";
-import mongoose, { Model } from "mongoose";
+import logger from '@san/util/logger';
+import { Model } from 'mongoose';
 
-let trimTs = (path: string) => {
+const trimTs = (path: string) => {
   return path.substr(0, path.length - 3);
 };
 
@@ -10,8 +10,8 @@ class ModelFactory {
    * Creates a modal of Type `name`
    * Returns the modal matching the name or null
    *
-   * @param name
-   * @returns {mongoose.Schema}
+   * @param {string} name: model name
+   * @returns {mongoose.Schema} Model<any>: model ionstance
    */
   static getModel = (name: string): Model<any> => {
     if (!name) throw Error('Model Name not provided');
@@ -30,7 +30,7 @@ class ModelFactory {
       // in case it was exported in the most recommended way
       // exports = ModelName
       return model;
-    } catch (e) {
+    } catch (e: any) {
       logger.error(e);
       logger.info(
         `You tried to import '${filename}' when you asked the model

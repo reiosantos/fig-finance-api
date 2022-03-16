@@ -1,4 +1,4 @@
-# Node Express Mongo Template
+# Node Express Mongo Fig/Finance
 
 ### Response Format
 ````json5

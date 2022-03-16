@@ -1,9 +1,11 @@
-import jwt from 'jsonwebtoken';
+// eslint-disable-next-line camelcase
 import express_jwt from 'express-jwt';
-import { Request } from "express";
+import { Request } from 'express';
 
 const getTokenFromHeaders = (req: Request) => {
-  const { headers: { authorization } } = req;
+  const {
+    headers: { authorization }
+  } = req;
   if (authorization && authorization.split(' ')[0].toLowerCase() === 'jwt') {
     return authorization.split(' ')[1];
   }

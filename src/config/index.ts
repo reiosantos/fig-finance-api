@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace NodeJS {
   interface Global {
     secretKey: string;
@@ -11,23 +12,22 @@ declare namespace NodeJS {
   }
 }
 
-let getEnv = (envName: string) => {
+const getEnv = (envName: string) => {
   return process.env[envName];
 };
 
-let getEnvJSON = (envName: string) => {
-  let env = getEnv(envName);
+const getEnvJSON = (envName: string) => {
+  const env = getEnv(envName);
   if (env) {
     try {
       return JSON.parse(env);
-    } catch (ex) {
-    }
+    } catch (ex) {}
   }
 };
 
 global.secretKey = getEnv('SECRET_KEY') || 'Some-RandoM-SeCRet-KeY';
 global.env = getEnv('ENV') || 'local';
-global.port = Number.parseInt(getEnv('PORT') || '3000');
+global.port = Number.parseInt(getEnv('PORT') || '3000', 10);
 global.urlPrefix = getEnv('URL_PREFIX') || '/api';
 global.urlVersion = getEnv('URL_VERSION') || '/v1';
 global.debugName = 'node-mongo-template';

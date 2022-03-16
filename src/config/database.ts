@@ -1,5 +1,5 @@
-import mongoose, { Connection, ConnectionOptions } from "mongoose";
-import logger from "@san/util/logger";
+import mongoose, { Connection, ConnectionOptions } from 'mongoose';
+import logger from '@san/util/logger';
 
 class MongoClient {
   options: ConnectionOptions = {
@@ -20,7 +20,7 @@ class MongoClient {
 
       const { connection } = mongoose;
 
-      connection.on("error", (error: string) => {
+      connection.on('error', (error: string) => {
         logger.error(`Error occurred: ${error}`);
       });
 
@@ -29,7 +29,7 @@ class MongoClient {
 
       return MongoClient.instance;
     } catch (e) {
-      logger.error(e)
+      logger.error(e);
       throw Error(`Unable to connect to database: ${e}`);
     }
   }
